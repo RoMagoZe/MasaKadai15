@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    
+
     @IBAction func cancel(segue: UIStoryboardSegue) {}
 }
 
@@ -50,6 +50,4 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell?.imageView?.image = checkMark
         }
     }
-
 }
-
