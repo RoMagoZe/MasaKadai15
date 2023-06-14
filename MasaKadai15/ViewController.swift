@@ -14,9 +14,6 @@ class ViewController: UIViewController {
     private var items = Fruits.defaultItems
     private let checkMark = UIImage(named: "check-mark")
 
-    // 選択されたセルの状態を保持するための変数
-    private var selectedIndexPaths: Set<IndexPath> = []
-
     @IBAction func save(segue: UIStoryboardSegue) {
         let secondVC = segue.source as? SecondViewController
 
@@ -40,33 +37,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
         let item = items[indexPath.row]
         cell.textLabel?.text = item.0
-
-        if selectedIndexPaths.contains(indexPath) {
-            cell.imageView?.image = checkMark
-        } else {
-            cell.imageView?.image = item.1 ? checkMark : nil
-        }
+        cell.imageView?.image = item.1 ? checkMark : nil
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let cell = tableView.cellForRow(at: indexPath)
-
-        if items[indexPath.row].1 {
-            items[indexPath.row].1 = false
-            cell?.imageView?.image = nil
-        } else {
-            if selectedIndexPaths.contains(indexPath) {
-                selectedIndexPaths.remove(indexPath)
-                cell?.imageView?.image = nil
-            } else {
-                selectedIndexPaths.insert(indexPath)
-                cell?.imageView?.image = checkMark
-            }
-        }
-
-        tableView.deselectRow(at: indexPath, animated: true)
+        items[indexPath.row].1.toggle()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
